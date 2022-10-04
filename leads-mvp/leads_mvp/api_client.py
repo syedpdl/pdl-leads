@@ -74,16 +74,12 @@ def pdl_company_search(
 
             if response["status"] == 200:
                 data = response['data']
+                profile_data = [record.get('profiles') for record in data]
                 if data:
-                    all_records.extend([record.get('profiles') for record in data])
-                    print(all_records)
+                    all_records.extend([profile for sublist in profile_data for profile in sublist])
             else:
                 print("Person Search Error:", response)
     else:
         print("Company Search Error:", response)
 
     return all_records
-
-
-if __name__ == "__main__":
-    pdl_company_search("automotive", 100, 20, "director", "engineering")
